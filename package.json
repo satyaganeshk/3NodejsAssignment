@@ -4,7 +4,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node dist/app.js",
-    "build": "tsc"
+    "build": "tsc",
+    "dev": "nodemon src/app.ts"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +27,8 @@
     "@types/node": "^22.13.14",
     "@types/sequelize": "^4.28.20",
     "cross-env": "^7.0.3",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   }
 }

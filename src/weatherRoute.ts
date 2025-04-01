@@ -1,9 +1,7 @@
 import express, { Request, Response } from 'express';
 import axios from 'axios';
 import Weather from './weatherModels';
-import dotenv from 'dotenv';
-
-dotenv.config(); // Load environment variables
+import envConfigs from './envConfigs';
 
 const router = express.Router();
 
@@ -14,7 +12,7 @@ router.post('/SaveWeatherMapping', async (req: Request, res: Response): Promise<
 
     for (const { city, country } of cities) {
       const geoResponse = await axios.get<{ latitude: number; longitude: number }[]>(`https://api.api-ninjas.com/v1/geocoding?city=${city}`, {
-        headers: { 'X-Api-Key': process.env.API_NINJAS_KEY || ''},
+        headers: { 'X-Api-Key': envConfigs.apiNinjasKey }
       });
 
       if (!geoResponse.data || !geoResponse.data.length) {
@@ -24,7 +22,7 @@ router.post('/SaveWeatherMapping', async (req: Request, res: Response): Promise<
       const { latitude, longitude } = geoResponse.data[0];
       const weatherResponse = await axios.get('https://weatherapi-com.p.rapidapi.com/current.json', {
         params: { q: `${latitude},${longitude}` },
-        headers: { 'x-rapidapi-key': process.env.RAPIDAPI_KEY || '',
+        headers: { 'x-rapidapi-key': envConfigs.rapidApiKey,
                    'x-rapidapi-host': 'weatherapi-com.p.rapidapi.com',
                     useQueryString: true
                 },

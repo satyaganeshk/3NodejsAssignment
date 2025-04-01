@@ -1,22 +1,20 @@
 import { Sequelize } from 'sequelize';
-import dotenv from 'dotenv';
-
-dotenv.config();  // Load environment variables
+import envConfigs from './envConfigs';
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME as string,
-  process.env.DB_USER as string,
-  process.env.DB_PASSWORD as string,
+  envConfigs.dbName,
+  envConfigs.dbUser,
+  envConfigs.dbPassword,
   {
-    host: process.env.DB_HOST,
-    dialect: 'postgres',
-    port: Number(process.env.DB_PORT) || 5432,
-    logging: false,
+    host: envConfigs.dbHost,
+    dialect: envConfigs.dbDialect as any, // Cast to 'any' if TypeScript complains
+    port: envConfigs.dbPort,
+    logging: envConfigs.logging,
   }
 );
 
 sequelize.authenticate()
-  .then(() => console.log('✅ Database connected successfully.'))
-  .catch((err) => console.error('❌ Unable to connect to the database:', err));
+  .then(() => console.log('Database connected successfully.'))
+  .catch((err) => console.error('Unable to connect to the database:', err));
 
 export default sequelize;
