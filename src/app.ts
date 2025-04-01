@@ -1,3 +1,9 @@
+import dotenv from 'dotenv';
+
+dotenv.config();  // Load .env variables
+
+console.log('🔹 DB Password Loaded:', process.env.DB_PASSWORD ? 'Yes' : 'No'); // Debugging
+
 import express from 'express';
 import sequelize from './db';
 import weatherRoutes from './weatherRoute';
